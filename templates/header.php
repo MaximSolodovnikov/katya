@@ -19,7 +19,7 @@
 
     <!-- Custom styles for this template -->
     <link href="bootstrap/css/starter-template.css" rel="stylesheet">
-
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -33,6 +33,13 @@
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="?">Катрушины фото</a>
+            <ul class="nav navbar-nav">
+                <?php if(IS_ADMIN): ?>
+                    <li><a href="?act=logout">Выйти из Админки</a></li>
+                <?php else: ?>
+                    <li><a href="?act=login">Авторизироваться</a></li>
+                <?php endif; ?>
+            </ul>
         </div>
       </div>
     </nav>
