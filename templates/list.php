@@ -1,5 +1,4 @@
 <?php require 'templates/header.php'; ?>
-<?php echo $info; ?>
 <div class="row">
     <?php foreach ($records as $row): ?> 
     <div class="col-sm-6 col-md-4">
@@ -16,4 +15,12 @@
     </div>
     <?php endforeach; ?>
 </div>
+
+Страницы:
+<?php for($i = 1; $i <= $pages/$limit+1; $i++): ?>
+    <?php if($i == $page): ?><b/><?= $i; ?></b>
+    <?php else: ?><a href="?page=<?= $i; ?>"><?= $i; ?></a>
+    <?php endif; ?>
+<?php endfor; ?>
+
 <?php require 'templates/footer.php'; ?>
