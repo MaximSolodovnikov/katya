@@ -32,7 +32,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="?">Катрушины фото</a>
+          <a class="navbar-brand" href="?">Фотоальбом</a>
             <ul class="nav navbar-nav">
                 <?php if(IS_ADMIN): ?>
                     <li><a href="?act=logout">Выйти из Админки</a></li>

@@ -5,40 +5,18 @@
     <h4><?= $ENTRY['date']; ?></h4>
     <p class="list_content"><?= $ENTRY['content']; ?></p>
     
+    
     <div class="row">
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="img/IMG_3111.JPG" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="img/IMG_3111.JPG" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="img/IMG_3111.JPG" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="img/IMG_3111.JPG" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="img/IMG_3111.JPG" alt="...">
-          </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-          <a href="#" class="thumbnail">
-            <img src="img/IMG_3111.JPG" alt="...">
-          </a>
-        </div>
+        <?php foreach ($pics as $item): ?>
+            <div class="col-xs-6 col-md-3">
+                <a href="img/<?php echo $ENTRY['id'] . '/' . $item['photos'] ;?>" class="thumbnail">
+                    <img src='img/<?php echo $ENTRY['id'] . '/thumbs/' . $item['thumbs'] ;?>' alt="thumbs"> 
+                </a>
+            </div>
+        <?php endforeach; ?>
     </div>
-</div>
-<h3 class="madia">Comments</h3>
+</div>   
+<h3 class="madia">Комментарий</h3>
 <hr/>
 
 <!-------------- Post a comment ------------>
@@ -59,7 +37,7 @@
     <div class="media">
         <div class="media-left media-top">
           <a href="#">
-            <img class="media-object" src="img/nature-q-g-64-64-5.jpg" alt="...">
+            <img class="media-object" src="img/avatar.png" alt="avatar">
           </a>
         </div>
         <div class="media-body">

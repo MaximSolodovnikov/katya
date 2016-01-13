@@ -2,8 +2,9 @@
 <div class="row">
     <?php foreach ($records as $row): ?> 
     <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">  
-            <a href="?act=view-entry&id=<?= $row['id']; ?>"><img src="img/IMG_3111.JPG" alt=""></a>
+        <div class="thumbnail"> 
+            <a href="?act=view-entry&id=<?= $row['id']; ?>"><img src='img/<?php echo $row['id'] . '/thumbs/' . $row['main_photo'] ;?>' alt=""></a>
+
             <div class="caption">
                 <h3><a href="?act=view-entry&id=<?= $row['id']; ?>"><?= $row['header']; ?></a></h3>
                 <p><?= $row['date']; ?></p>

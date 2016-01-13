@@ -36,17 +36,24 @@ switch ($act) {
             $row['content'] = nl2br($row['content']);
             $records[] = $row;
         }
+        
         require 'templates/list.php';
         break;
     case 'view-entry':
-        if (!isset($_GET['id'])) {die ("Missing id parametr");}
+        if (!isset($_GET['id'])) {die ("Missing id parametre");}
         $id = intval($_GET['id']);
         
         $ENTRY = $mysqli->query("SELECT * FROM `entry` WHERE id = $id")->fetch_assoc();
         if(!$ENTRY) {die ("No such entry");}
-        $ENTRY['date'] = date('Y-m-d');
         $ENTRY['content'] = nl2br($ENTRY['content']);
         $ENTRY['header'] = htmlspecialchars($ENTRY['header']);
+        
+        $pics = array();
+        
+        $sel = $mysqli->query("SELECT * FROM `pics` WHERE entry_id = $id");
+        while($row = $sel->fetch_assoc()) {
+            $pics[] = $row;
+        }
         
         $comments = array();
         $sel = $mysqli->query("SELECT * FROM `comments` WHERE entry_id = $id ORDER BY date DESC");
