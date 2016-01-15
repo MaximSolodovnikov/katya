@@ -91,8 +91,16 @@ switch ($act) {
     
     case 'do-new-entry':
         if(!IS_ADMIN) die("You must be an admin to add the entry");
-        $sel = $mysqli->prepare("INSERT INTO `entry` (header, date, content) VALUES (?, ?, ?)");
-        $sel->bind_param('sss', $_POST['header'], $_POST['date'], $_POST['content']);
+
+        // Каталог, в который мы будем принимать файл:
+        $uploaddir = 'img/thumbs/';
+        $uploadfile = $uploaddir . $_FILES['main_photo']['name'];
+        
+        // Копируем файл из каталога для временного хранения файлов:
+        copy($_FILES['main_photo']['tmp_name'], $uploadfile);
+
+        $sel = $mysqli->prepare("INSERT INTO `entry` (main_photo, header, date, content) VALUES (?, ?, ?, ?)");
+        $sel->bind_param('ssss', $uploadfile, $_POST['header'], $_POST['date'], $_POST['content']);
        
         if($sel->execute()){
             
@@ -115,6 +123,40 @@ switch ($act) {
             
             die("Ошибка при добавлении комментария.");
         }  
+        break;
+        
+    case 'add-photos-to-art':
+        
+        if(!IS_ADMIN) die("You must be an admin to add the entry");
+
+            for($i=0; $i<count($_FILES['upload']['name']); $i++) {
+
+              $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
+
+              if ($tmpFilePath != ""){
+
+                $newFilePath = "img/art/" . $_FILES['upload']['name'][$i];
+
+                $sel = $mysqli->prepare("INSERT INTO `pics` (thumbs, photos, entry_id) VALUES (?, ?, ?)");
+                $sel->bind_param('ssi', $newFilePath, $newFilePath, $_POST['entry_id']);
+        
+                //Upload the file into the temp dir
+                if(move_uploaded_file($tmpFilePath, $newFilePath)) {
+                    
+                    if($sel->execute()){    
+                        
+                        header('Location: ?act=view-entry&id=' . intval($_POST['entry_id']));    
+                    }
+                    else {
+                        
+                        die("Ошибка при добавлении фотографий");
+                    }
+                } else {
+                    
+                    die("Ошибка загрузки файлов.");
+                }
+              }
+            }
         break;
         
     case 'logout':

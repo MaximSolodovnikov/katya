@@ -3,7 +3,7 @@
     <?php foreach ($records as $row): ?> 
     <div class="col-sm-6 col-md-4">
         <div class="thumbnail"> 
-            <a href="?act=view-entry&id=<?= $row['id']; ?>"><img src='img/<?php echo $row['id'] . '/thumbs/' . $row['main_photo'] ;?>' alt=""></a>
+            <a href="?act=view-entry&id=<?= $row['id']; ?>"><img src='<?php echo $row['main_photo'] ;?>' alt="thumbs"></a>
 
             <div class="caption">
                 <h3><a href="?act=view-entry&id=<?= $row['id']; ?>"><?= $row['header']; ?></a></h3>

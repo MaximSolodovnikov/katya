@@ -35,6 +35,7 @@
           <a class="navbar-brand" href="?">Фотоальбом</a>
             <ul class="nav navbar-nav">
                 <?php if(IS_ADMIN): ?>
+                <li><a href="?act=admin"><b>Админка</b></a></li>
                     <li><a href="?act=logout">Выйти из Админки</a></li>
                 <?php else: ?>
                     <li><a href="?act=login">Авторизироваться</a></li>

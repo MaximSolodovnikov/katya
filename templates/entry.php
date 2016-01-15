@@ -1,16 +1,31 @@
 <?php require 'templates/header.php'; ?>
+<?php if(IS_ADMIN): ?>
+<!------------ Added photos of art ---------->
+
+        <div class="jumbotron">
+            <form method="POST" action="?act=add-photos-to-art" enctype="multipart/form-data">
+                <label>Фото статьи:</label>
+                <input name="upload[]" type="file" multiple="multiple" />
+                <input type="hidden" name="entry_id" value="<?= $id; ?>">
+                <button class="btn btn-lg btn-primary" name="add" type="submit">Добавить</button>
+            </form>
+        </div>
+
+    
+<!------------- End adding of photos --------->
+<?php endif; ?>
+
 
 <div class="jumbotron">
     <h2><?= $ENTRY['header']; ?></h2><hr>
     <h4><?= $ENTRY['date']; ?></h4>
     <p class="list_content"><?= $ENTRY['content']; ?></p>
-    
-    
+
     <div class="row">
         <?php foreach ($pics as $item): ?>
             <div class="col-xs-6 col-md-3">
-                <a href="img/<?php echo $ENTRY['id'] . '/' . $item['photos'] ;?>" class="thumbnail">
-                    <img src='img/<?php echo $ENTRY['id'] . '/thumbs/' . $item['thumbs'] ;?>' alt="thumbs"> 
+                <a href="<?php echo $item['photos'] ;?>" class="thumbnail">
+                    <img src='<?php echo $item['thumbs'] ;?>' alt="thumbs"> 
                 </a>
             </div>
         <?php endforeach; ?>
