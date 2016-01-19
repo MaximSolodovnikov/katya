@@ -54,3 +54,34 @@ body {
     font-family: 'Lobster', cursive;
     font-size: 1.5em;
 }
+
+.exit_admin {
+    color: #E24F39 !important; /*red*/
+    font-weight: bold;
+}
+
+.exit_admin:hover {
+    color: white !important; /*white*/
+}
+
+.edit {
+
+    color: orange;
+    font-family: 'Lobster', cursive;
+}
+
+.delete {
+
+    color: #E24F39;
+    font-family: 'Lobster', cursive;
+}
+
+.add {
+
+    color: #5CB85C; /*green*/
+    font-family: 'Lobster', cursive;
+}
+
+.input_adding_photos {
+    margin: 0 auto 0 auto;
+}

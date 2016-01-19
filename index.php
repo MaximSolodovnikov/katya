@@ -40,6 +40,7 @@ switch ($act) {
         require 'templates/list.php';
         break;
     case 'view-entry':
+        
         if (!isset($_GET['id'])) {die ("Missing id parametre");}
         $id = intval($_GET['id']);
         
@@ -56,7 +57,7 @@ switch ($act) {
         }
         
         $comments = array();
-        $sel = $mysqli->query("SELECT * FROM `comments` WHERE entry_id = $id ORDER BY date DESC");
+        $sel = $mysqli->query("SELECT * FROM `comments` WHERE `entry_id` = $id ORDER BY id DESC");
         
         while ($row = $sel->fetch_assoc()) {
             
@@ -73,6 +74,7 @@ switch ($act) {
         break;
     
     case 'do-login':
+        
         if($_POST['login'] == 'login' && $_POST['password'] == 'password') {
             
             $_SESSION['IS_ADMIN'] = TRUE;
@@ -85,33 +87,42 @@ switch ($act) {
         break;
         
     case 'admin':
+        
         if(!IS_ADMIN) die("You must be an admin to add the entry");
         require 'templates/admin.php';
         break;
     
     case 'do-new-entry':
+        
         if(!IS_ADMIN) die("You must be an admin to add the entry");
 
         // Каталог, в который мы будем принимать файл:
         $uploaddir = 'img/thumbs/';
         $uploadfile = $uploaddir . $_FILES['main_photo']['name'];
         
-        // Копируем файл из каталога для временного хранения файлов:
-        copy($_FILES['main_photo']['tmp_name'], $uploadfile);
-
-        $sel = $mysqli->prepare("INSERT INTO `entry` (main_photo, header, date, content) VALUES (?, ?, ?, ?)");
-        $sel->bind_param('ssss', $uploadfile, $_POST['header'], $_POST['date'], $_POST['content']);
-       
-        if($sel->execute()){
+        if (!$_FILES['main_photo']['tmp_name']) {
             
-            header('Location: ?act=admin');
+            die("Вы не выбрали основоное фото");
         } else {
             
+            // Копируем файл из каталога для временного хранения файлов:
+            copy($_FILES['main_photo']['tmp_name'], $uploadfile);
+            $sel = $mysqli->prepare("INSERT INTO `entry` (main_photo, header, date, content) VALUES (?, ?, ?, ?)");
+            $sel->bind_param('ssss', $uploadfile, $_POST['header'], $_POST['date'], $_POST['content']);
+
+            if($sel->execute()){
+
+            header('Location: ?act=admin');
+
+            } else {
+
             die("Ошибка при добавлении новой записи.");
-        }  
+            }  
+        }
+        
         break;
         
-        case 'do-new-comment':
+    case 'do-new-comment':
         
         $sel = $mysqli->prepare("INSERT INTO `comments` (entry_id, author, date, text) VALUES (?, ?, ?, ?)");
         $sel->bind_param('ssss', $_POST['entry_id'], $_POST['author'], $_POST['date'], $_POST['text']);
@@ -133,37 +144,99 @@ switch ($act) {
 
               $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
 
-              if ($tmpFilePath != ""){
-
-                $newFilePath = "img/art/" . $_FILES['upload']['name'][$i];
+              if ($tmpFilePath == "" && $_POST['add']){
+                  
+                die("Выберете фото для загрузки");
+                
+              } else {
+                  $newFilePath = "img/art/" . $_FILES['upload']['name'][$i];
 
                 $sel = $mysqli->prepare("INSERT INTO `pics` (thumbs, photos, entry_id) VALUES (?, ?, ?)");
                 $sel->bind_param('ssi', $newFilePath, $newFilePath, $_POST['entry_id']);
         
-                //Upload the file into the temp dir
-                if(move_uploaded_file($tmpFilePath, $newFilePath)) {
-                    
-                    if($sel->execute()){    
-                        
-                        header('Location: ?act=view-entry&id=' . intval($_POST['entry_id']));    
-                    }
-                    else {
-                        
-                        die("Ошибка при добавлении фотографий");
-                    }
-                } else {
+                    //Upload the file into the temp dir
+                    if(move_uploaded_file($tmpFilePath, $newFilePath)) {
+
+                        if($sel->execute()){    
+
+                            header('Location: ?act=view-entry&id=' . intval($_POST['entry_id']));    
+                        }
+                        else {
+
+                            die("Ошибка при добавлении фотографий");
+                        }
+                    } else {
                     
                     die("Ошибка загрузки файлов.");
                 }
-              }
             }
+        }
+        break;
+        
+    case 'edit-entry':
+        
+        $id = intval($_GET['id']);
+        $row = $mysqli->query("SELECT * FROM `entry` WHERE id = $id")->fetch_assoc();
+        require 'templates/edit-entry.php';
+        break;
+    
+    case 'apply-edit-entry':
+        
+        if(!IS_ADMIN) die("You must be an admin to edit the entry");
+
+        // Каталог, в который мы будем принимать файл:
+        $uploaddir = 'img/thumbs/';
+        $uploadfile = $uploaddir . $_FILES['main_photo']['name'];
+        
+        if (!$_FILES['main_photo']['tmp_name']) {
+            
+            die("Вы не выбрали основоное фото");
+            
+        } else {
+            
+            // Копируем файл из каталога для временного хранения файлов:
+            copy($_FILES['main_photo']['tmp_name'], $uploadfile);
+
+            $sel = $mysqli->prepare("UPDATE `entry` SET main_photo = ?, header = ?, date = ?, content = ? WHERE id = ?");
+            $id = intval($_POST['id']);
+            $sel->bind_param('ssssi', $uploadfile, $_POST['header'], $_POST['date'], $_POST['content'], $id);
+
+            if($sel->execute()){
+
+                header('Location: .');
+            } else {
+
+                die("Ошибка при добавлении новой записи.");
+            }  
+        }
+
+        break;
+        
+    case 'delete-entry':
+        
+        if(!IS_ADMIN) die("You must be an admin to delete the entry");
+        $id = intval($_GET['id']);
+        $mysqli->query("DELETE FROM `entry` WHERE id = $id");
+        $mysqli->query("DELETE FROM `comments` WHERE entry_id = $id");
+        $mysqli->query("DELETE FROM `pics` WHERE entry_id = $id");
+        header("Location: .");
+        break;
+        
+    case 'delete-comment':
+        
+        if(!IS_ADMIN) die("You must be an admin to delete the comment");
+        $id = intval($_GET['id']);
+        $mysqli->query("DELETE FROM `comments` WHERE id = $id") or die("Cannot delete the comment");
+        header("Location: ?act=view-entry&id=" . intval($_GET['entry_id'] . '#d'));
         break;
         
     case 'logout':
+        
         unset($_SESSION['IS_ADMIN']);
         header('Location: .');
         break;
     
     default :
+        
         die("No such action");
 }

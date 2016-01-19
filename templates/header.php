@@ -36,12 +36,12 @@
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand brand_name" href="?">Фотоальбом</a>
+        <div class="navbar-header brand_name">
+          <a class="navbar-brand" href="?">Фотоальбом</a>
             <ul class="nav navbar-nav navbar-right">
                 <?php if(IS_ADMIN): ?>
                 <li><a href="?act=admin"><b>Добавление нового события</b></a></li>
-                    <li><a href="?act=logout">Выйти из Админки</a></li>
+                <li><a href="?act=logout" class="exit_admin">Выйти из Админки</a></li>
                 <?php else: ?>
                     <li><a class="authorization" href="?act=login">Авторизироваться</a></li>
                 <?php endif; ?>

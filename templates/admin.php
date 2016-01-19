@@ -12,7 +12,7 @@
             <input type="date" name="date" class="form-control" >
             <label>Описание нового события</label>
             <textarea name="content" class="form-control" rows="3" placeholder="Описание события"></textarea><br />
-            <button class="btn btn-lg btn-primary" name="add" type="submit">Добавить</button>
+            <button class="btn btn-lg btn-primary" name="add_new_entry" type="submit">Добавить</button>
         </form>
     </div>
 </div>
