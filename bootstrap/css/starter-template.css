@@ -1,5 +1,6 @@
 body {
   padding-top: 50px;
+  
 }
 .starter-template {
   padding: 40px 15px;
@@ -11,6 +12,7 @@ body {
 html {
   position: relative;
   min-height: 100%;
+  
 }
 body {
   /* Margin bottom by footer height */
@@ -40,4 +42,15 @@ body {
 -------------------------------------------------- */
 .list_content {
     text-align: justify;
+}
+
+.authorization {
+    
+    text-align: right;
+    margin-left: 15px;
+}
+
+.brand_name {
+    font-family: 'Lobster', cursive;
+    font-size: 1.5em;
 }

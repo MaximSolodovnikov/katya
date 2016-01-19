@@ -28,9 +28,9 @@ switch ($act) {
         
         while ($row = $sel->fetch_assoc()) {
             
-            if (mb_strlen($row['content']) > 200) {
+            if (mb_strlen($row['content']) > 100) {
                 
-                $row['content'] = mb_substr(strip_tags($row['content']), 0, 197) . '...';
+                $row['content'] = mb_substr(strip_tags($row['content']), 0, 97) . '...';
             }
             $row['header'] = htmlspecialchars($row['header']);
             $row['content'] = nl2br($row['content']);

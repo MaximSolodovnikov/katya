@@ -1,36 +1,37 @@
 <?php require 'templates/header.php'; ?>
+
 <?php if(IS_ADMIN): ?>
 <!------------ Added photos of art ---------->
-
-        <div class="jumbotron">
-            <form method="POST" action="?act=add-photos-to-art" enctype="multipart/form-data">
-                <label>Фото статьи:</label>
-                <input name="upload[]" type="file" multiple="multiple" />
-                <input type="hidden" name="entry_id" value="<?= $id; ?>">
-                <button class="btn btn-lg btn-primary" name="add" type="submit">Добавить</button>
-            </form>
-        </div>
-
+<h3><b>Добавление фото к событию <?= $ENTRY['header']; ?></b></h3><br />
     
-<!------------- End adding of photos --------->
+    <div class="jumbotron">
+        <form method="POST" action="?act=add-photos-to-art" enctype="multipart/form-data">
+            <label>Выберите фото:</label>
+            <input name="upload[]" type="file" multiple="multiple" class="form-control" /><br /><br />
+            <input type="hidden" name="entry_id" value="<?= $id; ?>">
+            <button class="btn btn-lg btn-primary" name="add" type="submit">Добавить</button>
+        </form>
+    </div>
+ 
+<!------------- End of adding photos --------->
 <?php endif; ?>
 
-
+<h2><b><?= $ENTRY['header']; ?></b></h2>
+<p><?= $ENTRY['date']; ?></p><br />
 <div class="jumbotron">
-    <h2><?= $ENTRY['header']; ?></h2><hr>
-    <h4><?= $ENTRY['date']; ?></h4>
+   
     <p class="list_content"><?= $ENTRY['content']; ?></p>
-
     <div class="row">
         <?php foreach ($pics as $item): ?>
             <div class="col-xs-6 col-md-3">
-                <a href="<?php echo $item['photos'] ;?>" class="thumbnail">
+                <a href="<?php echo $item['photos'] ;?>" class="thumbnail" rel="lightbox" data-lightbox="image-1">
                     <img src='<?php echo $item['thumbs'] ;?>' alt="thumbs"> 
                 </a>
             </div>
         <?php endforeach; ?>
     </div>
-</div>   
+</div>
+
 <h3 class="madia">Комментарий</h3>
 <hr/>
 
@@ -38,7 +39,7 @@
 <div class="col-sm-6">
     <form class="form-signin" action="?act=do-new-comment" method="POST">
         <label for="inputEmail" class="sr-only">Автор комментария:</label>
-        <input type="text" name="author" id="inputEmail" class="form-control" placeholder="Ваш логин" required autofocus>
+        <input type="text" name="author" id="inputEmail" class="form-control" placeholder="Ваш логин">
         <input type="hidden" name="entry_id" value="<?= $id; ?>">
         <input type="hidden" name="date" value="<?= date('Y-m-d'); ?>"><br />
         <label for="inputEmail" class="sr-only">Текст комментария</label>

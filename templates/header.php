@@ -7,9 +7,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="favicon.png">
 
-    <title>Starter Template for Bootstrap</title>
+    <title><?php if($_GET['id']) echo $ENTRY['header']; else echo "Фотоальбом"; ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -19,6 +19,11 @@
 
     <!-- Custom styles for this template -->
     <link href="bootstrap/css/starter-template.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="bootstrap/css/lightbox.css" type="text/css" media="screen" />
+
+    <!--    Google fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -32,13 +37,13 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="?">Фотоальбом</a>
-            <ul class="nav navbar-nav">
+          <a class="navbar-brand brand_name" href="?">Фотоальбом</a>
+            <ul class="nav navbar-nav navbar-right">
                 <?php if(IS_ADMIN): ?>
-                <li><a href="?act=admin"><b>Админка</b></a></li>
+                <li><a href="?act=admin"><b>Добавление нового события</b></a></li>
                     <li><a href="?act=logout">Выйти из Админки</a></li>
                 <?php else: ?>
-                    <li><a href="?act=login">Авторизироваться</a></li>
+                    <li><a class="authorization" href="?act=login">Авторизироваться</a></li>
                 <?php endif; ?>
             </ul>
         </div>

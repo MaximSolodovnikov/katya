@@ -2452,6 +2452,7 @@ table th[class*="col-"] {
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #ddd;
   }
+
   .table-responsive > .table {
     margin-bottom: 0;
   }
@@ -2609,6 +2610,7 @@ input[type="search"] {
   input[type="month"].form-control {
     line-height: 34px;
   }
+  
   input[type="date"].input-sm,
   input[type="time"].input-sm,
   input[type="datetime-local"].input-sm,
@@ -4991,6 +4993,7 @@ a.badge:focus {
     padding-top: 48px;
     padding-bottom: 48px;
   }
+  
   .container .jumbotron,
   .container-fluid .jumbotron {
     padding-right: 60px;
@@ -6444,6 +6447,7 @@ button.close {
     margin-top: -10px;
     font-size: 30px;
   }
+  
   .carousel-control .glyphicon-chevron-left,
   .carousel-control .icon-prev {
     margin-left: -10px;
