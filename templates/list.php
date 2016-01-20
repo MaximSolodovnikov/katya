@@ -1,4 +1,5 @@
 <?php require 'templates/header.php'; ?>
+
 <div class="row">
     <?php foreach ($records as $row): ?> 
     <div class="col-sm-6 col-md-4">
@@ -17,11 +18,28 @@
     <?php endforeach; ?>
 </div>
 
-Страницы:
-<?php for($i = 1; $i <= $pages/$limit+1; $i++): ?>
-    <?php if($i == $page): ?><b/><?= $i; ?></b>
-    <?php else: ?><a href="?page=<?= $i; ?>"><?= $i; ?></a>
-    <?php endif; ?>
-<?php endfor; ?>
+<hr/>
+
+<nav>
+    <ul class="pagination">
+        <li>
+            <a href="?page=1" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+      <?php for($i = 1; $i <= $pages/$limit+1; $i++): ?> 
+      <?php if($i == $page): ?><li class="active"><a href="#"><?php echo $i; ?></a></li>
+      <?php else: ?><li><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+      <?php endif; ?>
+      <?php endfor; ?>
+
+        <li>
+            <a href="?page=<?php echo $i - 1; ?>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <?php require 'templates/footer.php'; ?>

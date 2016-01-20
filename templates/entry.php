@@ -51,10 +51,10 @@
 </div>
 <?php endif; ?>
 
-<?php if(IS_ADMIN): ?>
+
 <!-------------- Outputs of comments ------------>
 <div class="col-sm-8">
-    <h3 class="madia"><b>Комментарии</b></h3><br />
+    <h3 class="madia"><?php if(IS_ADMIN): ?><b>Комментарии</b><?php endif; ?></h3><br />
     <?php foreach ($comments as $item): ?>
     <div class="media">
         <div class="media-left media-top">
@@ -64,12 +64,13 @@
         </div>
         <div class="media-body"><a name="d"></a>
             <h4 class="media-heading media-left"><b><?= $item['author']; ?></b> | <?= $item['date']; ?></h4><br/>
-            <h5 class="media-left list_content"><?= $item['text']; ?><a href="?act=delete-comment&entry_id=<?= $ENTRY['id'];?>&id=<?= $item['id'];?>#d"> &raquo; Удалить</a></h5>
+            <h5 class="media-left list_content"><?= $item['text']; ?><?php if(IS_ADMIN): ?><a class="delete" href="?act=delete-comment&entry_id=<?= $ENTRY['id'];?>&id=<?= $item['id'];?>#d"> &raquo; Удалить</a><?php endif; ?>
+            </h5>
         </div>
     </div>
     <?php endforeach; ?>
 </div>
 
-<?php endif; ?>
+
 
 <?php require 'templates/footer.php'; ?>

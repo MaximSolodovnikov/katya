@@ -89,20 +89,23 @@ switch ($act) {
     case 'admin':
         
         if(!IS_ADMIN) die("You must be an admin to add the entry");
+        
         require 'templates/admin.php';
         break;
     
     case 'do-new-entry':
         
         if(!IS_ADMIN) die("You must be an admin to add the entry");
-
+        $data = array();
+        
         // Каталог, в который мы будем принимать файл:
         $uploaddir = 'img/thumbs/';
         $uploadfile = $uploaddir . $_FILES['main_photo']['name'];
         
         if (!$_FILES['main_photo']['tmp_name']) {
             
-            die("Вы не выбрали основоное фото");
+            die("<h3 style='color: red; text-align: center;'>Вы не выбрали основоное фото. <br />Или возможно не заполнили все необходимые поля</h3>");
+            
         } else {
             
             // Копируем файл из каталога для временного хранения файлов:
@@ -111,7 +114,7 @@ switch ($act) {
             $sel->bind_param('ssss', $uploadfile, $_POST['header'], $_POST['date'], $_POST['content']);
 
             if($sel->execute()){
-
+            
             header('Location: ?act=admin');
 
             } else {

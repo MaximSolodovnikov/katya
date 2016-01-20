@@ -1,7 +1,8 @@
 <?php require 'templates/header.php'; ?>
 
 <div class="col-sm-8">
-    <h3><b>Добавление нового события</b></h3><br />
+   
+<h3><b>Добавление нового события</b></h3><br />
     <div class="jumbotron">
         <form method="POST" action="?act=do-new-entry" enctype="multipart/form-data">
             <label>Основное фото статьи:</label>
